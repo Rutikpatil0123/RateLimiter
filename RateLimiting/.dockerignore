@@ -1,0 +1,13 @@
+.gradle
+build
+bin
+out
+.idea
+.vscode
+Dockerfile
+.git
+.gitignore
+.dockerignore
+*.log
+*.sh
+mock_server_simple.py

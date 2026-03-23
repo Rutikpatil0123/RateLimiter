@@ -1,0 +1,65 @@
+> Task :clean
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :resolveMainClassName
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+[32m :: Spring Boot :: [39m              [2m (v3.4.3)[0;39m
+
+[2m2026-03-23T19:45:51.248+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mc.e.R.RateLimitingApplication           [0;39m [2m:[0;39m Starting RateLimitingApplication using Java 21.0.9 with PID 55403 (/Users/rutikpatil/Documents/GitHub/RateLimiter/RateLimiting/build/classes/java/main started by rutikpatil in /Users/rutikpatil/Documents/GitHub/RateLimiter/RateLimiting)
+[2m2026-03-23T19:45:51.249+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mc.e.R.RateLimitingApplication           [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+[2m2026-03-23T19:45:51.464+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Multiple Spring Data modules found, entering strict repository configuration mode
+[2m2026-03-23T19:45:51.465+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2m2026-03-23T19:45:51.474+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+[2m2026-03-23T19:45:51.521+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.cloud.context.scope.GenericScope    [0;39m [2m:[0;39m BeanFactory id=e81c53e1-7d37-39a2-a099-57c1cbb2d09e
+[2m2026-03-23T19:45:51.691+05:30[0;39m [31mERROR[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mi.n.r.d.DnsServerAddressStreamProviders [0;39m [2m:[0;39m Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+[2m2026-03-23T19:45:51.851+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [After]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [Before]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [Between]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [Cookie]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [Header]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [Host]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [Method]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [Path]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [Query]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [ReadBody]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [RemoteAddr]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [Weight]
+[2m2026-03-23T19:45:51.852+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.c.g.r.RouteDefinitionRouteLocator   [0;39m [2m:[0;39m Loaded RoutePredicateFactory [CloudFoundryRouteService]
+[2m2026-03-23T19:45:51.948+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mo.s.b.web.embedded.netty.NettyWebServer [0;39m [2m:[0;39m Netty started on port 8090 (http)
+[2m2026-03-23T19:45:51.960+05:30[0;39m [32m INFO[0;39m [35m55403[0;39m [2m--- [RateLimiting] [           main] [0;39m[36mc.e.R.RateLimitingApplication           [0;39m [2m:[0;39m Started RateLimitingApplication in 0.824 seconds (process running for 0.992)
+
+> Task :bootRun FAILED
+
+[Incubating] Problems report is available at: file:///Users/rutikpatil/Documents/GitHub/RateLimiter/RateLimiting/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':bootRun'.
+> Process 'command '/Users/rutikpatil/.gradle/jdks/eclipse_adoptium-21-aarch64-os_x.2/jdk-21.0.9+10/Contents/Home/bin/java'' finished with non-zero exit value 137 (this value may indicate that the process was terminated with the SIGKILL signal, which is often caused by the system running out of memory)
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 2h 1m 22s
+5 actionable tasks: 5 executed

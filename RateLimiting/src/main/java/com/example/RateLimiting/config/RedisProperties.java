@@ -8,28 +8,27 @@ import lombok.Data;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-
 @Component
 @Data
 @ConfigurationProperties(prefix = "spring.redis")
 public class RedisProperties {
 
-    private String host = "43.205.126.61";
-
+    private String host = "localhost";
     private int port = 6379;
-
     private int timeout = 2000;
-    
-    // Java Cliet libary for Redis connection pooling
+    private String password; // Added password field
+
     @Bean
-    public JedisPool getJedisPool(){
+    public JedisPool getJedisPool() {
         JedisPoolConfig poolConfig = new JedisPoolConfig();
         poolConfig.setMaxTotal(50);
         poolConfig.setMaxIdle(10);
         poolConfig.setMinIdle(5);
         poolConfig.setTestOnBorrow(true);
         poolConfig.setTestOnReturn(true);
-        return new JedisPool(poolConfig, host, port, timeout);
+        poolConfig.setTestWhileIdle(true);
 
+        // Include password in the constructor for authentication
+        return new JedisPool(poolConfig, host, port, timeout, password);
     }
 }

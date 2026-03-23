@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Limiter Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .token-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .5;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-white min-h-screen font-sans selection:bg-blue-500 selection:text-white"
+    x-data="rateLimiter()">
+    <div class="max-w-4xl mx-auto py-12 px-6">
+        <!-- Header -->
+        <header class="mb-12 text-center">
+            <h1
+                class="text-5xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
+                Rate Limiter Dashboard
+            </h1>
+            <p class="text-slate-400 text-lg">Real-time visualization of Distributed Token Bucket algorithm</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Token Status Card -->
+            <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-3xl backdrop-blur-xl">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-xl font-bold">Bucket Status</h2>
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"
+                        :class="tokens > 2 ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'">
+                        Live
+                    </span>
+                </div>
+
+                <!-- Circular Progress (Simple representation) -->
+                <div class="relative h-48 w-48 mx-auto mb-8 flex items-center justify-center">
+                    <svg class="h-full w-full transform -rotate-90">
+                        <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="12" fill="transparent"
+                            class="text-slate-700" />
+                        <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="12" fill="transparent"
+                            class="text-blue-500 transition-all duration-500 ease-out"
+                            :stroke-dasharray="2 * Math.PI * 88"
+                            :stroke-dashoffset="2 * Math.PI * 88 * (1 - tokens / capacity)" />
+                    </svg>
+                    <div class="absolute text-center">
+                        <span class="text-5xl font-black block" x-text="tokens">0</span>
+                        <span class="text-slate-400 text-sm uppercase tracking-widest">Tokens</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-400">Capacity:</span>
+                        <span class="font-bold" x-text="capacity">10</span>
+                    </div>
+                    <div class="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-500 transition-all duration-300"
+                            :style="`width: ${(tokens/capacity)*100}%` "></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls & Log -->
+            <div class="space-y-8">
+                <!-- Action Card -->
+                <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-3xl backdrop-blur-xl">
+                    <h3 class="text-lg font-bold mb-6">Simulator</h3>
+                    <div class="flex flex-col gap-4">
+                        <button @click="sendRequest"
+                            class="w-full py-4 bg-blue-600 hover:bg-blue-500 active:scale-95 transition-all rounded-2xl font-bold text-lg shadow-lg shadow-blue-900/20 disabled:opacity-50"
+                            :disabled="loading">
+                            Send Request
+                        </button>
+                        <button @click="sendBurst"
+                            class="w-full py-4 bg-slate-700 hover:bg-slate-600 active:scale-95 transition-all rounded-2xl font-bold text-lg shadow-lg disabled:opacity-50"
+                            :disabled="loading">
+                            Simulate Burst (x5)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Logs -->
+                <div
+                    class="bg-slate-800/50 border border-slate-700 p-6 rounded-3xl backdrop-blur-xl max-h-64 overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-slate-500 font-mono">Request Log
+                        </h3>
+                        <button @click="logs = []"
+                            class="text-xs text-slate-500 hover:text-white transition-colors uppercase">Clear</button>
+                    </div>
+                    <div class="space-y-2 font-mono text-xs">
+                        <template x-for="log in logs" :key="log.id">
+                            <div class="flex items-start gap-3 p-2 rounded-lg"
+                                :class="log.status === 'success' ? 'bg-green-500/5' : 'bg-red-500/5'">
+                                <span :class="log.status === 'success' ? 'text-green-400' : 'text-red-400'"
+                                    x-text="log.code"></span>
+                                <span class="text-slate-300" x-text="log.msg"></span>
+                                <span class="ml-auto text-slate-600" x-text="log.time"></span>
+                            </div>
+                        </template>
+                        <div x-show="logs.length === 0" class="text-slate-600 italic py-4 text-center">No requests
+                            recorded</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function rateLimiter() {
+            return {
+                tokens: 0,
+                capacity: 10,
+                loading: false,
+                logs: [],
+
+                async init() {
+                    this.refreshStatus();
+                    setInterval(() => this.refreshStatus(), 1000);
+                },
+
+                async refreshStatus() {
+                    try {
+                        const res = await fetch('/gateway/rate-limit/status');
+                        const data = await res.json();
+                        this.tokens = data.availableTokens;
+                        this.capacity = data.capacity;
+                    } catch (e) {
+                        console.error("Status fetch failed", e);
+                    }
+                },
+
+                async sendRequest() {
+                    const start = Date.now();
+                    const id = Math.random().toString(36).substr(2, 9);
+                    try {
+                        const res = await fetch('/api/resource');
+                        const remaining = res.headers.get('X-RateLimit-Remaining');
+                        if (remaining !== null) this.tokens = parseInt(remaining);
+
+                        const time = new Date().toLocaleTimeString();
+                        if (res.status === 200) {
+                            this.logs.unshift({ id, status: 'success', code: '200', msg: 'Request allowed by Gateway', time });
+                        } else if (res.status === 429) {
+                            this.logs.unshift({ id, status: 'error', code: '429', msg: 'Rate limit blocked!', time });
+                        } else {
+                            this.logs.unshift({ id, status: 'error', code: res.status, msg: 'API responded with error', time });
+                        }
+                    } catch (e) {
+                        this.logs.unshift({ id: Math.random(), status: 'error', code: 'FAIL', msg: 'Network failure', time: new Date().toLocaleTimeString() });
+                    }
+                },
+
+                async sendBurst() {
+                    this.loading = true;
+                    for (let i = 0; i < 5; i++) {
+                        this.sendRequest();
+                        await new Promise(r => setTimeout(r, 50));
+                    }
+                    this.loading = false;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

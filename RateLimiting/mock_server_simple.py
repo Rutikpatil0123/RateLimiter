@@ -34,7 +34,7 @@ class MockHandler(BaseHTTPRequestHandler):
         print(f"[{self.address_string()}] {args[0]}")
 
 if __name__ == '__main__':
-    port = 8081
+    port = 9999
     server = HTTPServer(('localhost', port), MockHandler)
     print(f"Starting mock server on http://localhost:{port}")
     print("Press Ctrl+C to stop")
